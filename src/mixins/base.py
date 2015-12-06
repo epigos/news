@@ -3,11 +3,11 @@ import traceback
 import pyquery
 
 from scrapy.conf import settings
-from scrapy.contrib.spiders import CrawlSpider, Rule
+from scrapy.spiders import CrawlSpider, Rule
 from scrapy.exceptions import DropItem
 from scrapy.link import Link
 
-from news.items import NewsItem
+from src.items import NewsItem
 
 
 class NewsSpider(CrawlSpider):
@@ -29,7 +29,7 @@ class NewsSpider(CrawlSpider):
             raise ValueError('allowed_domains required')
 
         self.log_exceptions = 0
-
+        self.codes = {}
         self.scraped = 0
         # reference to pyquery instance
         self.pq = None
@@ -37,6 +37,7 @@ class NewsSpider(CrawlSpider):
         # default evaluation order for normal fields
         self.field_order = [
             ('link', self.item_link),
+            ('code', self.item_code),
             ('title', self.item_title),
             ('content', self.item_content),
             ('category', self.item_category),
@@ -147,6 +148,10 @@ class NewsSpider(CrawlSpider):
     def item_link(self, response):
         return response.url
 
+    def item_code(self, response):
+        """Stub implementation of item_code."""
+        return self._conditional_override('item_code', response)
+
     def item_title(self, response):
         """Stub implementation of item_title."""
         return self._conditional_override('item_title', response)
@@ -181,3 +186,7 @@ class NewsSpider(CrawlSpider):
         if publisher:
             return publisher
         return self.publisher
+
+    def build_item_code(self, product_code):
+        """Used to populate self.codes."""
+        return ('{0}'.format(product_code)).lower()

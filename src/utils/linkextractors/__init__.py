@@ -1,6 +1,6 @@
 import pyquery
 
-from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
+from scrapy.linkextractors.sgml import SgmlLinkExtractor
 
 
 class LinkExtractor(SgmlLinkExtractor):

@@ -11,8 +11,8 @@
 
 BOT_NAME = 'news'
 
-SPIDER_MODULES = ['news.spiders']
-NEWSPIDER_MODULE = 'news.spiders'
+SPIDER_MODULES = ['src.spiders']
+NEWSPIDER_MODULE = 'src.spiders'
 
 DEBUG = True
 
@@ -44,9 +44,10 @@ DEBUG = True
 
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-#    'news.middlewares.MyCustomSpiderMiddleware': 543,
-#}
+SPIDER_MIDDLEWARES = {
+    'src.middleware.path.PathMiddleware': 1,
+    'src.middleware.debugger.DebuggerMiddleware': 2,
+}
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
@@ -62,9 +63,10 @@ DEBUG = True
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'news.pipelines.SomePipeline': 300,
-#}
+ITEM_PIPELINES = {
+    'src.pipelines.schema.SchemaValidationPipeline': 1,
+    'src.pipelines.text.TextTransformationPipeline': 2,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
