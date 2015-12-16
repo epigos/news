@@ -1,15 +1,12 @@
 
 import re
 
-from scrapy.spiders import Rule
-
-from src.utils.linkextractors import LinkExtractor
-from src.utils.mixins.smart import SmartNewsSpider
+from src.utils.mixins.smart import SmartNewsCrawler
 
 from src.pipelines import text_processors
 
 
-class GhanawebSpider(SmartNewsSpider):
+class GhanawebSpider(SmartNewsCrawler):
 
     name = 'ghanaweb.com'
     publisher = "GhanaWeb"
@@ -17,14 +14,9 @@ class GhanawebSpider(SmartNewsSpider):
 
     start_urls = ['http://www.ghanaweb.com/GhanaHomePage/NewsArchive/browse.archive.php']
 
-    rules = (
-        Rule(LinkExtractor('#month-breakdown ul li')),
-        Rule(LinkExtractor('#year-breakdown ul li')),
-        Rule(LinkExtractor('#medsection1 > ul li'),
-             callback='parse_item_wrapper')
-    )
-
     smart_spider_settings = {
+        'news_rules': '#medsection1 > ul li',
+        'category_rules': ['#month-breakdown ul li', '#year-breakdown ul li'],
         'item_code': '#topnav b',
         'item_title': '#medsection1 > h1',
         'item_content': '#medsection1 > p:nth-child(8)',
@@ -44,7 +36,7 @@ class GhanawebSpider(SmartNewsSpider):
         ]
     }
 
-    crawl_only_url = 'http://www.ghanaweb.com/GhanaHomePage/crime/Drugs-are-being-sold-by-pupils-in-Sunyani-West-District-400171'
+    # crawl_only_url = 'http://www.ghanaweb.com/GhanaHomePage/crime/Drugs-are-being-sold-by-pupils-in-Sunyani-West-District-400171'
 
     def item_comments(self, response):
         comments = self.pq('#medsection1 .option-bar > p.last > a').text()
