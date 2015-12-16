@@ -3,7 +3,7 @@ import pyquery
 
 from src.utils import html_value, html_values
 from src.pipelines import text_processors
-from src.mixins.base import NewsSpider
+from src.utils.mixins.base import NewsSpider
 
 
 class SmartNewsSpider(NewsSpider):

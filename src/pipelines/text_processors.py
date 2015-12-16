@@ -84,10 +84,11 @@ def fix_text(input):
         return input
 
 
-def string_to_date(input):
+def date_to_utc(input):
     """Convert string to date"""
     try:
-        return date_parser(input)
+        date = date_parser(input)
+        return date.strftime('%m/%d/%Y')
     except Exception:
         return input
 

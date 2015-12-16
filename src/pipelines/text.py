@@ -2,7 +2,7 @@ from scrapy.loader.processors import Compose
 
 from .text_processors import (
     enforce_unicode, capitalisation, append_fullstop, capitalise_sentences,
-    normalise_internal_space, remove_empty_sentences, strip_tags
+    normalise_internal_space, remove_empty_sentences, strip_tags, date_to_utc
 )
 
 
@@ -22,6 +22,7 @@ all_spiders = {
                 capitalise_sentences,
                 remove_empty_sentences
                 ],
+    'date_published': [date_to_utc],
 }
 
 

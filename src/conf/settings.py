@@ -68,6 +68,11 @@ ITEM_PIPELINES = {
     'src.pipelines.text.TextTransformationPipeline': 2,
 }
 
+if not DEBUG:
+    ITEM_PIPELINES.update({
+        'src.pipelines.save_items.SaveItemsPipeline': 3
+    })
+
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
 # NOTE: AutoThrottle will honour the standard settings for concurrency and delay

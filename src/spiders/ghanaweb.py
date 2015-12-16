@@ -4,7 +4,7 @@ import re
 from scrapy.spiders import Rule
 
 from src.utils.linkextractors import LinkExtractor
-from src.mixins.smart import SmartNewsSpider
+from src.utils.mixins.smart import SmartNewsSpider
 
 from src.pipelines import text_processors
 
@@ -31,7 +31,7 @@ class GhanawebSpider(SmartNewsSpider):
         'item_images': ('#medsection1 .article-image img', 'src'),
         'item_source': '#medsection1 > p.floatRight',
         'item_category': '#topnav > a:nth-child(2)',
-        'item_date_published': '#topnav > a:nth-child(3)'
+        'item_date_published': '#date'
     }
 
     text_filters = {
@@ -44,7 +44,7 @@ class GhanawebSpider(SmartNewsSpider):
         ]
     }
 
-    # crawl_only_url = 'http://www.ghanaweb.com/GhanaHomePage/NewsArchive/Another-NPP-Big-Fish-In-Drug-Deal-158848'
+    crawl_only_url = 'http://www.ghanaweb.com/GhanaHomePage/crime/Drugs-are-being-sold-by-pupils-in-Sunyani-West-District-400171'
 
     def item_comments(self, response):
         comments = self.pq('#medsection1 .option-bar > p.last > a').text()
