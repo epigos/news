@@ -10,17 +10,16 @@ class SaveItemsPipeline(object):
         ext = cls()
         return ext
 
-    # def __init__(self, *args, **kwargs):
-    #     self.processed_items = 0
-    #     dispatcher.connect(self.spider_opened, signals.spider_opened)
-    #     dispatcher.connect(self.spider_closed, signals.spider_closed)
+    def __init__(self, *args, **kwargs):
+        self.processed_items = 0
+        dispatcher.connect(self.spider_opened, signals.spider_opened)
+        dispatcher.connect(self.spider_closed, signals.spider_closed)
 
-    # def spider_opened(self, spider):
-    #     create_quarantine_database(spider)
+    def spider_opened(self, spider):
+        pass
 
-    # def spider_closed(self, spider):
-    #     get_quarantine_database().finish_database(spider)
+    def spider_closed(self, spider):
+        pass
 
-    # def process_item(self, item, spider):
-    #     get_quarantine_database().save_item(item)
-    #     return item
+    def process_item(self, item, spider):
+        return item
