@@ -9,6 +9,8 @@ from scrapy.link import Link
 
 from src.items import NewsItem
 
+from src.utils.database.quarantine import get_quarantine_database
+
 
 class NewsSpider(CrawlSpider):
 
@@ -109,6 +111,15 @@ class NewsSpider(CrawlSpider):
             url = None
             if response.url:
                 url = response.url
+
+            quarantine_database = get_quarantine_database()
+            if quarantine_database and settings.get('QUARANTINE_MODE'):
+                e = {
+                    'exception': str(type(ex)),
+                    'stacktrace': traceback.format_exc(),
+                    'link': url
+                }
+                quarantine_database.save_exception(e)
 
             if settings.get('DEBUG'):
                 self.log('Spider Exception trying to parse: ' + url)

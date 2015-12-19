@@ -36,7 +36,7 @@ class GhanawebSpider(SmartNewsCrawler):
         ]
     }
 
-    # crawl_only_url = 'http://www.ghanaweb.com/GhanaHomePage/crime/Drugs-are-being-sold-by-pupils-in-Sunyani-West-District-400171'
+    crawl_only_url = 'http://www.ghanaweb.com/GhanaHomePage/crime/Drugs-are-being-sold-by-pupils-in-Sunyani-West-District-400171'
 
     def item_comments(self, response):
         comments = self.pq('#medsection1 .option-bar > p.last > a').text()
