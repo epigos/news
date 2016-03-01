@@ -1,4 +1,5 @@
 import re
+from dateutil.parser import parse as date_parser
 
 from scrapy.conf import settings
 
@@ -30,8 +31,10 @@ class QuarantineDatabase(object):
 
     def save_item(self, item):
         items = self.database.items
+        item = dict(item)
+        item['date_published'] = date_parser(item['date_published'])
         items.update_one(
             {self.uniq_key: item[self.uniq_key]},
-            {'$set': dict(item)},
+            {'$set': item},
             upsert=True, bypass_document_validation=self.safe
         )
